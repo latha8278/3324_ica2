@@ -1,35 +1,34 @@
-# nginx-proxy-deployment.yaml
+# nginx-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-proxy
+  name: nginx
   namespace: nginx-proxy
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: nginx-proxy
+      app: nginx
   template:
     metadata:
       labels:
-        app: nginx-proxy
+        app: nginx
     spec:
       containers:
       - name: nginx
-        image: ramakrishna41/nginx-proxy # Use your custom image if you created one
+        image: ramakrishna41/nginx-proxy
         ports:
         - containerPort: 80
 ---
-# nginx-proxy-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-proxy
+  name: nginx
   namespace: nginx-proxy
 spec:
-  type: NodePort # or NodePort if using a local cluster
+  type: NodePort
   ports:
   - port: 80
     targetPort: 80
   selector:
-    app: nginx-proxy
+    app: nginx
